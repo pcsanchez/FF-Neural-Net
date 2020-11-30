@@ -1,25 +1,21 @@
 from NeuralNetwork import NeuralNetwork
-from Neuron import Neuron
+from NeuralNetwork import load_model
+from utils import read_csv
 
-X = [[2.7810836,2.550537003],
-	[1.465489372,2.362125076],
-	[3.396561688,4.400293529],
-	[1.38807019,1.850220317],
-	[3.06407232,3.005305973],
-	[7.627531214,2.759262235],
-	[5.332441248,2.088626775],
-	[6.922596716,1.77106367],
-	[8.675418651,-0.242068655],
-	[7.673756466,3.508563011]]
 
-y = [[1, 0], [1, 0], [1, 0], [1, 0], [1, 0], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1]]
+# X = [[0, 0], [1, 0], [0, 1], [1, 1]]
 
-model = NeuralNetwork(2,4,2)
-model.set_params(learning_rate=0.1, alpha=0.1)
-print(model.predict([1.465489372,2.362125076]))
-print(model.predict([8.675418651,-0.242068655]))
-model.train(20, X, y)
-print(model.predict([1.465489372,2.362125076]))
-print(model.predict([8.675418651,-0.242068655]))
+# y = [[0], [0], [0], [1]]
+
+# val_X = [[1,1]]
+# val_y = [[1]]
+
+model = NeuralNetwork(1,2,1)
 model.describe()
+model.save('model.json')
+# model.train(10000, X, y, val_X, val_y)
+# print(model.predict([0, 0]))
+# print(model.predict([1, 0]))
+# print(model.predict([0, 1]))
+# print(model.predict([1, 1]))
 

@@ -7,7 +7,7 @@ class Neuron:
         self.bias = random()
         self.output = -1
         self.delta = -1
-        self.prev_delta = 0
+        self.prev_changes = [0 for i in range(num_inputs+1)]
 
     def __output(self, inputs):
         weighted_sum = self.bias
@@ -17,7 +17,13 @@ class Neuron:
         return weighted_sum
 
     def activate(self, inputs):
-        self.output =  1.0 / (1.0 + exp(-self.__output(inputs)))
+        exponent = self.__output(inputs)
+        if exponent > 200:
+            self.output = 1
+        elif exponent < -200:
+            self.output = 0
+        else:
+            self.output =  1.0 / (1.0 + exp(-self.__output(inputs)))
         return
 
     def derivative(self):

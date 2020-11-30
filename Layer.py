@@ -8,10 +8,14 @@ class Layer:
     # Update weights given inputs and learning rate.
     def update_weights(self, inputs, learning_rate, alpha):
         for neuron in self.neurons:
-            neuron.bias += (learning_rate * neuron.delta) + (alpha*neuron.prev_delta)
+            bias_delta = (learning_rate * neuron.delta) + (alpha*neuron.prev_changes[-1])
+            neuron.bias += bias_delta
+            neuron.prev_changes[-1] = bias_delta
             for i in range(len(inputs)):
-                neuron.weights[i+1] += learning_rate * neuron.delta * inputs[i] + (alpha * neuron.prev_delta)
-            neuron.prev_delta = neuron.delta
+                neuron_delta = learning_rate * neuron.delta * inputs[i] + (alpha * neuron.prev_changes[i])
+                neuron.weights[i+1] += neuron_delta
+                neuron.prev_changes[i] = neuron_delta
+        return
 
     # Returns all the neuron outputs of the layer.
     def get_outputs(self):
