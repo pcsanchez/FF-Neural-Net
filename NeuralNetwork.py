@@ -9,9 +9,11 @@ def load_model(file_name):
         hidden_layer = model.layers[0]
         output_layer = model.layers[1]
         for index, neuron in enumerate(hidden_layer.neurons):
-            neuron.weights = json_model['hidden_layer'][index]
+            neuron.weights = {int(key): value for key,value in json_model['hidden_layer'][index].items()}
+            neuron.bias = json_model['hidden_bias'][index]
         for index, neuron in enumerate(output_layer.neurons):
-            neuron.weights = json_model['output_layer'][index]
+            neuron.weights = {int(key): value for key, value in json_model['output_layer'][index].items()}
+            neuron.bias = json_model['output_bias'][index]
         return model
     return
 
@@ -85,7 +87,9 @@ class NeuralNetwork:
         model['alpha'] = self.alpha
         model['num_inputs'] = len(self.layers[0].neurons[0].weights)
         model['hidden_layer'] = [neuron.weights for neuron in self.layers[0].neurons]
+        model['hidden_bias'] = [neuron.bias for neuron in self.layers[0].neurons]
         model['output_layer'] = [neuron.weights for neuron in self.layers[1].neurons]
+        model['output_bias'] = [neuron.bias for neuron in self.layers[1].neurons]
         string_model = json.dumps(model)
         with open(file_name, 'w') as file:
             file.write(string_model)

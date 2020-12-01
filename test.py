@@ -10,9 +10,13 @@ from utils import read_csv
 # val_X = [[1,1]]
 # val_y = [[1]]
 
-model = NeuralNetwork(1,2,1)
+# model = NeuralNetwork(1,2,1)
+# model.set_params(0.5, 0.7)
+# model.save('model.json')
+# model.describe()
+
+model = load_model('model.json')
 model.describe()
-model.save('model.json')
 # model.train(10000, X, y, val_X, val_y)
 # print(model.predict([0, 0]))
 # print(model.predict([1, 0]))
